@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import Menu from './components/Menu';
+import routes from './routes';
 
 const App = () => {
 
@@ -13,9 +14,9 @@ return(
     <Menu />
     <div>
       <Switch>
-        <Route path="/" exact>
-          Home Page
-        </Route>
+      {routes.map((route) => {
+        return <Route key={route.path} exact path={route.path} component={route.component} />
+      })}
       </Switch>
     </div>
   </Router>

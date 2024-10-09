@@ -1,58 +1,59 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from "react-router-dom";
+import Nav from "./Nav";
 
 const Menu = () => {
+  const insta = "https://www.instagram.com/yeju.io/";
+  const git = "https://github.com/BboGyoung";
 
-  const insta = "https://www.instagram.com/yeju.io/"
-  const git = "https://github.com/BboGyoung"
-    
-  return(
+  return (
     <header className="bd-header">
-        <Link className="title is-3 m-0" to="/" exact>
+      <Link className="title is-3 m-0 is-flex" to="/">
         <i className="fas fa-home has-text-danger" />
-          <span>
-            HOME
-          </span> 
-        </Link>
-        <nav className="bd-nav">
-        <Link className="bd-nav-item bd-theme-docs is-docs" to="/foods" exact>
-        <span className="icon">
-        <i className="fa-solid fa-computer" />
-        </span>
-          <span className="bd-nav-item-name has-text-weight-bold">
-          DEV
-          </span> 
-        </Link>
-        <Link className="bd-nav-item bd-theme-expo is-expo" to="/foods" exact>
-        <span className="icon">
-        <i className="fa-solid fa-bowl-food" />
-        </span>
-          <span className="bd-nav-item-name has-text-weight-bold">
-            FOOD
-          </span> 
-        </Link>
-        <Link className="bd-nav-item bd-theme-sponsor is-sponsor" to="/foods" exact>
-        <span className="icon">
-        <i className="fa-solid fa-user" />
-        </span>
-          <span className="bd-nav-item-name has-text-weight-bold">
-            GUESTBOOK
-          </span> 
-        </Link>
+        <span className="ml-2">HOME</span>
+      </Link>
+      <nav className="bd-nav">
+        {Nav.map((nav) => {
+          return (
+            <NavLink
+              key={nav.name}
+              activeClassName="is-active"
+              className={`bd-nav-item ${nav.color}`}
+              to={nav.path}
+            >
+              <span className="icon">
+                <i className={`fa-solid ${nav.icon}`} />
+              </span>
+              <span className="bd-nav-item-name has-text-weight-bold">
+                {nav.name}
+              </span>
+            </NavLink>
+          );
+        })}
         <div className="bd-nav-icons">
-        <button className="bd-nav-item bd-theme-github is-github is-icon" onClick={()=>{window.open(git)}}>
-        <span className="icon">
-        <i class="fa-brands fa-github-alt fa-lg"></i>
-        </span>
-        </button>
-        <button className="bd-nav-item bd-theme-github is-github is-icon" onClick={()=>{window.open(insta)}}>
-        <span className="icon insta">
-        <i class="fa-brands fa-instagram fa-lg"></i>
-        </span>
-        </button>
+          <button
+            className="bd-nav-item bd-theme-github is-github is-icon"
+            onClick={() => {
+              window.open(git);
+            }}
+          >
+            <span className="icon">
+              <i className="fa-brands fa-github-alt fa-lg"></i>
+            </span>
+          </button>
+          <button
+            className="bd-nav-item bd-theme-github is-github is-icon"
+            onClick={() => {
+              window.open(insta);
+            }}
+          >
+            <span className="icon insta">
+              <i className="fa-brands fa-instagram fa-lg"></i>
+            </span>
+          </button>
         </div>
-        </nav>
-      </header>
-    );
+      </nav>
+    </header>
+  );
 };
 
 export default Menu;
