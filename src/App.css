@@ -19,9 +19,9 @@
 }
 
 .bd-nav-item {
-  --h: var(--bulma-primary-h);
-  --s: var(--bulma-primary-s);
-  --l: var(--bulma-primary-l);
+  --h: var(--bulma-warning-h);
+  --s: var(--bulma-warning-s);
+  --l: var(--bulma-warning-l);
   align-items: center;
   border-radius: 0.5em;
   color: var(--bulma-text-strong);
@@ -31,23 +31,23 @@
 }
 
 .bd-theme-dev {
-  --theme-h: var(--bulma-primary-h);
-  --theme-s: var(--bulma-primary-s);
-  --theme-l: var(--bulma-primary-l);
-  --theme-color: hsl(var(--theme-h), var(--theme-s), var(--theme-l));
-}
-
-.bd-theme-food {
   --theme-h: var(--bulma-warning-h);
   --theme-s: var(--bulma-warning-s);
   --theme-l: var(--bulma-warning-l);
   --theme-color: hsl(var(--theme-h), var(--theme-s), var(--theme-l));
 }
 
+.bd-theme-food {
+  --theme-h: var(--bulma-primary-h);
+  --theme-s: var(--bulma-primary-s);
+  --theme-l: var(--bulma-primary-l);
+  --theme-color: hsl(var(--theme-h), var(--theme-s), var(--theme-l));
+}
+
 .bd-theme-log {
-  --theme-h: var(--bulma-danger-h);
-  --theme-s: var(--bulma-danger-s);
-  --theme-l: var(--bulma-danger-l);
+  --theme-h: var(--bulma-info-h);
+  --theme-s: var(--bulma-info-s);
+  --theme-l: var(--bulma-info-l);
   --theme-color: hsl(var(--theme-h), var(--theme-s), var(--theme-l));
 }
 
@@ -55,16 +55,17 @@
   color: hsl(var(--h), var(--s), var(--l));
 }
 
+.card.is-food,
 .bd-nav-item.is-food {
-  --h: var(--bulma-warning-h);
-  --s: var(--bulma-warning-s);
-  --l: var(--bulma-warning-l);
+  --h: var(--bulma-primary-h);
+  --s: var(--bulma-primary-s);
+  --l: var(--bulma-primary-l);
 }
 
 .bd-nav-item.is-log {
-  --h: var(--bulma-danger-h);
-  --s: var(--bulma-danger-s);
-  --l: var(--bulma-danger-l);
+  --h: var(--bulma-info-h);
+  --s: var(--bulma-info-s);
+  --l: var(--bulma-info-l);
 }
 
 .bd-nav-item.is-github {
@@ -136,18 +137,11 @@
   word-break: break-word;
 }
 
-@media screen and (min-width: 800px) {
-  .food-create-button {
-    margin: 0 3rem;
-  }
-}
-
 .food-create-button {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
   text-align: center;
-  margin: 0 1.5rem;
 }
 
 .bd-hr {
@@ -178,9 +172,9 @@
 
 .food-contents .card:hover {
   --a: 0.05;
-  border: 1px solid hsl(28deg, 86%, 61%);
-  box-shadow: 0 1em 2em 0 hsl(28deg, 86%, 60%, 0.05),
-    0 2em 4em 0 hsl(28deg, 86%, 60%, 0.05);
+  border: 1.2px solid var(--theme-color);
+  box-shadow: 0 1em 2em 0 hsla(var(--h), var(--s), var(--l), var(--a)),
+    0 2em 4em 0 hsla(var(--h), var(--s), var(--l), var(--a));
   transform: translateY(-0.5em);
   cursor: pointer;
 }
@@ -191,4 +185,12 @@
 
 .card {
   margin-bottom: var(--bulma-block-spacing);
+}
+
+.field.is-grouped {
+  justify-content: flex-end;
+}
+
+.file.is-right .file-cta {
+  border-radius: var(--bulma-file-radius);
 }
