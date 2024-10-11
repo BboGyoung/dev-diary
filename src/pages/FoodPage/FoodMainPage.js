@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "../../components/Card";
 
 const FoodMainPage = () => {
+  const history = useHistory();
   const [foods, setFoods] = useState([]);
 
   const getFoods = () => {
@@ -42,6 +43,7 @@ const FoodMainPage = () => {
                 key={index}
                 data={food}
                 className={"bd-theme-food is-food"}
+                onClick={() => history.push(`/food/${food.id}`)}
               />
             );
           })}

@@ -157,7 +157,7 @@
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap: 3rem;
   max-width: 110rem;
-  margin: 0px;
+  margin: 0px auto;
 }
 
 .food-contents .card .content {
@@ -209,4 +209,13 @@
 }
 .font-xxx-large {
   font-size: xxx-large;
+}
+
+.label {
+  font-size: var(--bulma-size-medium);
+}
+
+.row-align-center {
+  display: flex;
+  align-items: center;
 }

@@ -1,4 +1,4 @@
-const Card = ({ data, className }) => {
+const Card = ({ data, className, onClick }) => {
   console.log("data", data);
   const getThumbnail = (description) => {
     const imgTags = description.match(/<img[^>]+src="([^">]+)"/);
@@ -8,7 +8,7 @@ const Card = ({ data, className }) => {
   const thumbnail = getThumbnail(data.description);
   console.log("thumbnail", thumbnail);
   return (
-    <div className={`card ${className}`}>
+    <div className={`card ${className}`} onClick={onClick}>
       <div className="card-image">
         <figure className="image is-4by3">
           {thumbnail ? (
