@@ -32,18 +32,18 @@ const Card = ({ data, className, onClick }) => {
         <div className="media">
           <div className="media-content">
             <p className="title is-4 mb-1">{data.name}</p>
-            <p className="subtitle is-6 is-flex">
+            <p className="subtitle is-6 row-align-baseline">
               <i class="fa-solid fa-location-dot mr-1 has-text-primary"></i>
-              {data.address}
+              <div className="address">{data.address}</div>
             </p>
           </div>
         </div>
         <div className="content">
-          <div>
+          <div className="row-align-baseline">
             <i class="fa-regular fa-calendar mr-1 has-text-primary"></i>
             {data.date}
           </div>
-          <div>
+          <div className="description">
             {data.description
               .replace(/<\/?[^>]+(>|$)/g, "")
               .replace(/&nbsp;/g, " ")}

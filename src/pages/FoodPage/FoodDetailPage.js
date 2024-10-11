@@ -1,11 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import parse from "html-react-parser";
 import axios from "axios";
 
 const FoodDetailPage = () => {
   const { id } = useParams();
+  const dropdownRef = useRef(null);
   const [food, setFood] = useState({});
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsActive(!isActive);
+  };
+
   const getFood = () => {
     axios.get(`http://localhost:3001/foods/${id}`).then((response) => {
       setFood(response.data);
@@ -16,6 +23,21 @@ const FoodDetailPage = () => {
     getFood();
   }, []);
 
+  // 드롭다운 외부 클릭을 감지하는 함수
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsActive(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="food-page">
       <section className="bd-hero">
@@ -24,18 +46,45 @@ const FoodDetailPage = () => {
           <hr className="bd-hr has-background-primary" />
         </div>
       </section>
+      <section className="section pt-0 pb-0 column is-half is-offset-one-quarter is-flex is-justify-content-flex-end">
+        <div
+          className={`dropdown ${isActive ? "is-active" : ""}`}
+          ref={dropdownRef}
+        >
+          <div className="dropdown-trigger">
+            <button
+              aria-haspopup="true"
+              aria-controls="dropdown-menu"
+              onClick={toggleDropdown}
+            >
+              <i className="fa-solid fa-ellipsis-vertical font-18"></i>
+            </button>
+          </div>
+          <div className="dropdown-menu" id="dropdown-menu" role="menu">
+            <div className="dropdown-content">
+              <a href="#" className="dropdown-item">
+                수정
+              </a>
+              <hr className="dropdown-divider" />
+              <a href="#" className="dropdown-item">
+                삭제
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="section pt-0">
         <div className="column is-half is-offset-one-quarter">
           <div className="field">
             <label className="label">맛집의 주소는?</label>
-            <div className="box row-align-center">
+            <div className="box row-align-baseline">
               <i class="fa-solid fa-location-dot mr-1 has-text-primary"></i>
               <p>{food.address}</p>
             </div>
           </div>
           <div className="field">
             <label className="label">다녀온 날짜는?</label>
-            <div className="box row-align-center">
+            <div className="box row-align-baseline">
               <i class="fa-regular fa-calendar mr-1 has-text-primary"></i>
               <p>{food.date}</p>
             </div>

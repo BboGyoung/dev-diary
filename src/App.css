@@ -104,6 +104,10 @@
   min-height: calc(100vh - 6.5rem);
 }
 
+.food-page .section {
+  padding-top: 0;
+}
+
 .bd-hero {
   --scale: 1;
   display: flex;
@@ -116,6 +120,8 @@
 
 .food-page .bd-hero {
   position: relative;
+  padding-top: 0;
+  padding-bottom: 3;
 }
 
 .food-page .bd-hero-body {
@@ -142,6 +148,7 @@
   align-items: center;
   justify-content: end;
   text-align: center;
+  margin-bottom: 2.5rem;
 }
 
 .bd-hr {
@@ -160,7 +167,17 @@
   margin: 0px auto;
 }
 
-.food-contents .card .content {
+.food-contents .card .media .address {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* 최대 4줄 표시 */
+  overflow: hidden; /* 넘치는 내용 숨김 */
+  text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+  height: 1.5em; /* 줄 높이에 따라 조정 (4줄 * 줄 높이) */
+  line-height: 1.5em; /* 줄 높이 설정 (필요에 따라 조정) */
+}
+
+.food-contents .card .content .description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4; /* 최대 4줄 표시 */
@@ -215,7 +232,11 @@
   font-size: var(--bulma-size-medium);
 }
 
-.row-align-center {
+.row-align-baseline {
   display: flex;
-  align-items: center;
+  align-items: baseline;
+}
+
+.font-18 {
+  font-size: 18px;
 }
