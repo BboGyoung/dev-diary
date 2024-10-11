@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const FoodCreatePage = () => {
   const [name, setName] = useState("");
@@ -7,14 +8,21 @@ const FoodCreatePage = () => {
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const descriptionRef = useRef(null);
+  const history = useHistory();
 
   const onSubmit = () => {
-    axios.post("http://localhost:3001/foods", {
-      name,
-      address,
-      date,
-      description,
-    });
+    axios
+      .post("http://localhost:3001/foods", {
+        name,
+        address,
+        date,
+        description,
+      })
+      .then((response) => {
+        if (response.status === 201 && response.statusText === "Created") {
+          previous();
+        }
+      });
   };
 
   const onChangeFile = (event) => {
@@ -22,16 +30,17 @@ const FoodCreatePage = () => {
 
     Array.from(files).forEach((file) => {
       const reader = new FileReader();
-      reader.readAsArrayBuffer(file);
+      reader.readAsDataURL(file);
       reader.onload = (e) => {
-        const arrayBuffer = e.target.result;
-        const blob = new Blob([arrayBuffer], { type: file.type });
-        const blobUrl = URL.createObjectURL(blob);
-        const imgTag = `<img src="${blobUrl}" style="max-width: 100%; height: auto;" />`;
+        const imgTag = `<img src="${e.target.result}" style="max-width: 100%; height: auto;" />`;
 
         insertImage(imgTag);
       };
     });
+  };
+
+  const previous = () => {
+    history.goBack();
   };
 
   const insertImage = (imgTag) => {
@@ -125,7 +134,9 @@ const FoodCreatePage = () => {
               </button>
             </div>
             <div className="control">
-              <button className="button is-primary is-light">취소</button>
+              <button className="button is-primary is-light" onClick={previous}>
+                취소
+              </button>
             </div>
           </div>
         </div>
