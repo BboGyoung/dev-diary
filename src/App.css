@@ -240,3 +240,12 @@
 .font-18 {
   font-size: 18px;
 }
+
+.min-width-100 {
+  min-width: 100px;
+}
+
+button.dropdown-item {
+  padding-inline-end: 1rem;
+  text-align: center;
+}

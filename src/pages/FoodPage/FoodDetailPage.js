@@ -23,7 +23,6 @@ const FoodDetailPage = () => {
     getFood();
   }, []);
 
-  // 드롭다운 외부 클릭을 감지하는 함수
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsActive(false);
@@ -60,15 +59,21 @@ const FoodDetailPage = () => {
               <i className="fa-solid fa-ellipsis-vertical font-18"></i>
             </button>
           </div>
-          <div className="dropdown-menu" id="dropdown-menu" role="menu">
+          <div
+            className="dropdown-menu min-width-100"
+            id="dropdown-menu"
+            role="menu"
+          >
             <div className="dropdown-content">
-              <a href="#" className="dropdown-item">
+              <button className="dropdown-item">
+                <i class="fa-regular fa-pen-to-square mr-1 has-text-primary"></i>
                 수정
-              </a>
+              </button>
               <hr className="dropdown-divider" />
-              <a href="#" className="dropdown-item">
+              <button className="dropdown-item">
+                <i class="fa-regular fa-trash-can mr-1 has-text-primary"></i>
                 삭제
-              </a>
+              </button>
             </div>
           </div>
         </div>
