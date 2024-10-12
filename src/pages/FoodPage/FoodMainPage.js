@@ -1,7 +1,7 @@
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Card from "../../components/Card";
+import FoodCard from "./FoodCard";
 
 const FoodMainPage = () => {
   const history = useHistory();
@@ -39,7 +39,7 @@ const FoodMainPage = () => {
         <div className="food-contents">
           {foods.map((food, index) => {
             return (
-              <Card
+              <FoodCard
                 key={index}
                 data={food}
                 className={"bd-theme-food is-food"}

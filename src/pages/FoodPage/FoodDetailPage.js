@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 import parse from "html-react-parser";
 import axios from "axios";
 
 const FoodDetailPage = () => {
   const { id } = useParams();
   const dropdownRef = useRef(null);
+  const history = useHistory();
   const [food, setFood] = useState({});
   const [isActive, setIsActive] = useState(false);
+  const [isMounted, setIsMounted] = useState(true); // 컴포넌트가 마운트되었는지 추적
 
   const toggleDropdown = () => {
     setIsActive(!isActive);
@@ -15,13 +18,29 @@ const FoodDetailPage = () => {
 
   const getFood = () => {
     axios.get(`http://localhost:3001/foods/${id}`).then((response) => {
-      setFood(response.data);
+      if (isMounted) {
+        setFood(response.data); // 컴포넌트가 마운트된 상태에서만 상태 업데이트
+      }
     });
   };
 
+  const deleteFood = (id) => {
+    axios
+      .delete(`http://localhost:3001/foods/${id}`)
+      .then(() => history.push("/food"));
+  };
+
+  const onClickEdit = (id) => {
+    history.push(`/food/${id}/edit`);
+  };
+
   useEffect(() => {
+    setIsMounted(true); // 컴포넌트가 마운트되면 true 설정
     getFood();
-  }, []);
+    return () => {
+      setIsMounted(false); // 컴포넌트 언마운트 시 false 설정
+    };
+  }, [id]); // id가 변경될 때마다 데이터를 불러옴
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -65,13 +84,13 @@ const FoodDetailPage = () => {
             role="menu"
           >
             <div className="dropdown-content">
-              <button className="dropdown-item">
-                <i class="fa-regular fa-pen-to-square mr-1 has-text-primary"></i>
+              <button className="dropdown-item" onClick={() => onClickEdit(id)}>
+                <i className="fa-regular fa-pen-to-square mr-1 has-text-primary"></i>
                 수정
               </button>
               <hr className="dropdown-divider" />
-              <button className="dropdown-item">
-                <i class="fa-regular fa-trash-can mr-1 has-text-primary"></i>
+              <button className="dropdown-item" onClick={() => deleteFood(id)}>
+                <i className="fa-regular fa-trash-can mr-1 has-text-primary"></i>
                 삭제
               </button>
             </div>
@@ -83,14 +102,14 @@ const FoodDetailPage = () => {
           <div className="field">
             <label className="label">맛집의 주소는?</label>
             <div className="box row-align-baseline">
-              <i class="fa-solid fa-location-dot mr-1 has-text-primary"></i>
+              <i className="fa-solid fa-location-dot mr-1 has-text-primary"></i>
               <p>{food.address}</p>
             </div>
           </div>
           <div className="field">
             <label className="label">다녀온 날짜는?</label>
             <div className="box row-align-baseline">
-              <i class="fa-regular fa-calendar mr-1 has-text-primary"></i>
+              <i className="fa-regular fa-calendar mr-1 has-text-primary"></i>
               <p>{food.date}</p>
             </div>
           </div>
